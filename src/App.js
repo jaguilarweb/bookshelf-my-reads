@@ -1,9 +1,11 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
+import Header from './Header'
 import './App.css'
 
 class BooksApp extends React.Component {
   state = {
+    books: {},
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -13,9 +15,21 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
+// Im need use this lifecicle events to fetch API
+/*   componentDidMount(){
+    BooksAPI.getAll()
+    .then(()=>{
+      this.setState(() => ({
+        books
+      }))
+    })
+  } */
+
+
   render() {
     return (
       <div className="app">
+        <Header />
         {this.state.showSearchPage ? (
           <div className="search-books">
             <div className="search-books-bar">
@@ -39,9 +53,7 @@ class BooksApp extends React.Component {
           </div>
         ) : (
           <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
+
             <div className="list-books-content">
               <div>
                 <div className="bookshelf">
