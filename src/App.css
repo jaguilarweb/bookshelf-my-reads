@@ -34,6 +34,24 @@ body, .app {
   padding: 0 10px 20px;
 }
 
+/*------------------------
+    Footer
+  -------------------------*/
+
+  footer {
+    width: 100%;
+    height: 70px;
+    background-color: #22272d;
+    border-top: 15px solid #ac35a2;
+    text-align: center;
+  }
+  
+  footer p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: white;
+  }
+
 @media (min-width: 600px) {
   .bookshelf {
     padding: 0 20px 40px;
