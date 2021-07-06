@@ -5,17 +5,14 @@ import SearchBook from './SearchBook'
 import ListBook from './ListBooks'
 import Footer from './Footer'
 import './App.css'
+import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    books: {},
+
     /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
+     * TODO: Use Route (Link)
      */
-    showSearchPage: false
   }
 
 // Im need use this lifecicle events to fetch API
@@ -33,11 +30,12 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Header />
-        {this.state.showSearchPage ? (
-          <SearchBook />
-        ) : (
+        <Route exact path='/' render={() => (
           <ListBook />
-          )}
+        )} />
+        <Route path='/searchPage' component={SearchBook}
+        
+        />
         <Footer />
       </div>
     )
