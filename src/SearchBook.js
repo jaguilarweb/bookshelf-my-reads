@@ -30,7 +30,7 @@ class SearchBook extends Component {
           </div>
         </div>
         <div className="search-books-results">
-            <Book />
+            <Book books={[]}/>
         </div>
     </div>
     )
