@@ -33,7 +33,17 @@ body, .app {
 .bookshelf {
   padding: 0 10px 20px;
 }
-
+.showing-books {
+  text-align: center;
+  margin: 10px 0;
+}
+.showing-books button {
+  color: blue;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+}
 /*------------------------
     Footer
   -------------------------*/
@@ -140,7 +150,7 @@ button:active {
 }
 
 .search-books-results {
-  padding: 80px 10px 20px;
+  padding: 50px 10px 20px;
 }
 
 /* books grid */
