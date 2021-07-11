@@ -64,6 +64,8 @@ body, .app {
 
 .bookshelf-books {
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .open-search {

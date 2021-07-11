@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom'
 //TODO: route back function
 
 class SearchBook extends Component {
+  state={
+    query:''
+  }
   render(){
     return(
       <div className="search-books">

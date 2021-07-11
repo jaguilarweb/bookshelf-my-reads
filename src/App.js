@@ -8,12 +8,6 @@ import './App.css'
 import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
-  state = {
-
-    /**
-     * TODO: Use Route (Link)
-     */
-  }
 
 // Im need use this lifecicle events to fetch API
 /*   componentDidMount(){

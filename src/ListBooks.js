@@ -52,7 +52,7 @@ class ListBook extends Component {
         "infoLink": "https://play.google.com/store/books/details?id=nggnmAEACAAJ&source=gbs_api",
         "canonicalVolumeLink": "https://market.android.com/details?id=book-nggnmAEACAAJ",
         "id": "nggnmAEACAAJ",
-        "shelf": "currentlyReading"
+        "shelf": "read"
       },
       {
         "title": "Learning Web Development with React and Bootstrap",
@@ -94,42 +94,68 @@ class ListBook extends Component {
         "infoLink": "http://books.google.com/books?id=sJf1vQAACAAJ&dq=redux+react&hl=&source=gbs_api",
         "canonicalVolumeLink": "https://books.google.com/books/about/Learning_Web_Development_with_React_and.html?hl=&id=sJf1vQAACAAJ",
         "id": "sJf1vQAACAAJ",
-        "shelf": "currentlyReading"
-    }
+        "shelf": "wantToRead"
+    },
   ]
   }
+
   render(){
+  // Filter result of shelft
+  const allBooks = this.state.books.map(book =>  book.shelf)
+  const shelfUnic = allBooks.filter((item, index) => (
+    allBooks.indexOf(item) === index
+  ))
+
+  const asignTitle=(shelf)=> {
+    let title= '';
+      switch (shelf) {
+        case 'currentlyReading':
+          title = 'Currently Reading'
+          break;
+        case 'wantToRead':
+          title = 'Want to Read'
+          break;
+        case 'read':
+          title = 'Read'
+          break;
+        default:
+          break;
+      }
+    return title
+  }
+
+  const bookListPerShelf = (shelf) => {
+    const filter = []
+    this.state.books.map((book) => {
+      if(shelf === book.shelf){
+        filter.push(book)
+      }
+      return filter
+    })
+    return filter
+  } 
     return(
       <main className="list-books">
-            <div className="list-books-content">
-              <div>
-                <div className="bookshelf">
-                  <BookshelftTitle />
-                  <div className="bookshelf-books">
-                    <Book />
+        <div className="list-books-content">
+          <div>
+            {shelfUnic.map((item, index) => {
+              return(
+                  <div key={index} className="bookshelf">
+                    <BookshelftTitle  title={asignTitle(item)} />,
+                    <div className="bookshelf-books">
+                        <Book books={bookListPerShelf(item)}/>
+                    </div>
                   </div>
-                </div>
-                <div className="bookshelf">
-                <BookshelftTitle />
-                  <div className="bookshelf-books">
-                  <Book />
-                  </div>
-                </div>
-                <div className="bookshelf">
-                <BookshelftTitle />
-                  <div className="bookshelf-books">
-                  <Book />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Link to='/searchPage'>
-              <div className="open-search">
-                  <button>Add a book</button>
-              </div>
-            </Link>
-          </main>
-        
+              )}
+            )}
+          </div>
+        </div>
+        <Link to='/searchPage'>
+          <div className="open-search">
+              <button>Add a book</button>
+          </div>
+        </Link>
+        </main>
     )
   }
 }
