@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 
 class ListBook extends Component {
 
-
   render(){
   // Filter result of shelft
   const allBooks = this.props.books.map(book =>  book.shelf)
@@ -41,6 +40,7 @@ class ListBook extends Component {
     })
     return filter
   } 
+
     return(
       <main className="list-books">
         <div className="list-books-content">
