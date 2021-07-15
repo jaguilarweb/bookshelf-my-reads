@@ -25,6 +25,7 @@ class ListBook extends Component {
           title = 'Read'
           break;
         default:
+          title = 'None'
           break;
       }
     return title
@@ -48,9 +49,9 @@ class ListBook extends Component {
             {shelfUnic.map((item, index) => {
               return(
                   <div key={index} className="bookshelf">
-                    <BookshelftTitle  title={asignTitle(item)} />,
+                    <BookshelftTitle  title={asignTitle(item)} />
                     <div className="bookshelf-books">
-                        <Book books={bookListPerShelf(item)}/>
+                        <Book books={bookListPerShelf(item)} shelfList={shelfUnic}/>
                     </div>
                   </div>
               )}
