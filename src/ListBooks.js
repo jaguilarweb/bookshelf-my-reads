@@ -51,7 +51,10 @@ class ListBook extends Component {
                   <div key={index} className="bookshelf">
                     <BookshelftTitle  title={asignTitle(item)} />
                     <div className="bookshelf-books">
-                        <Book books={bookListPerShelf(item)} shelfList={shelfUnic}/>
+                        <Book 
+                          books={bookListPerShelf(item)}
+                          onChangeShelf={this.props.onChangeShelf}
+                        />
                     </div>
                   </div>
               )}
