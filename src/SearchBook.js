@@ -60,7 +60,10 @@ class SearchBook extends Component {
             </div>
           )}
         <div className="search-books-results">
-          <Book books={showingBooks}  onChangeShelf={this.props.onChangeShelf}/>
+          <Book 
+            books={showingBooks}
+            onChangeShelf={this.props.onChangeShelf}
+          />
         </div>
     </div>
     )

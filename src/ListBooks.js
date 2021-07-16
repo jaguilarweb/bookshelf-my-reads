@@ -6,11 +6,19 @@ import { Link } from 'react-router-dom'
 class ListBook extends Component {
 
   render(){
-  // Filter result of shelft
-  const allBooks = this.props.books.map(book =>  book.shelf)
+  // Filter result of shelf
+  console.log('list book ' + this.props.books.length)
+/*   const allBooks = this.props.books.map(book => {
+    console.log(book.shelf)
+    return book.shelf
+  })
   const shelfUnic = allBooks.filter((item, index) => (
     allBooks.indexOf(item) === index
   ))
+ */
+
+  const allBooks = this.props.books.map(book => book.shelf)
+  const shelfUnic = [...new Set(allBooks)]
 
   const asignTitle=(shelf)=> {
     let title= '';
@@ -41,24 +49,27 @@ class ListBook extends Component {
     })
     return filter
   } 
-
+// Evitar que se dupliquen los resultados.
     return(
       <main className="list-books">
         <div className="list-books-content">
           <div>
-            {shelfUnic.map((item, index) => {
+            {shelfUnic.map((shelf) => {
               return(
-                  <div key={index} className="bookshelf">
-                    <BookshelftTitle  title={asignTitle(item)} />
+                  <div key={shelf} className="bookshelf">
+                    <BookshelftTitle  title={asignTitle(shelf)} />
                     <div className="bookshelf-books">
                         <Book 
-                          books={bookListPerShelf(item)}
+                          books={bookListPerShelf(shelf)}
+                          value={shelf}
                           onChangeShelf={this.props.onChangeShelf}
                         />
                     </div>
                   </div>
-              )}
-            )}
+              )//fin return
+              }
+            )// fin map
+          }
           </div>
         </div>
         <Link to='/searchPage'>
@@ -67,8 +78,8 @@ class ListBook extends Component {
           </div>
         </Link>
         </main>
-    )
-  }
-}
+    )//Fin return main
+  }//Render
+}// Class
 
 export default ListBook

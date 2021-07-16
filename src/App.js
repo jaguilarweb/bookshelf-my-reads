@@ -6,7 +6,6 @@ import ListBook from './ListBooks'
 import Footer from './Footer'
 import './App.css'
 import { Route } from 'react-router-dom'
-import Book from './Book'
 
 class BooksApp extends React.Component {
   state = {
@@ -16,23 +15,27 @@ class BooksApp extends React.Component {
   componentDidMount(){
     BooksAPI.getAll()
     .then((books) => {
+      console.log(`Did Mount. Total books ${books.length}`)
       this.setState(() => ({
-        books
+        books: books
       }))
     })
   }
 
-  changeShelfBook = (id, shelf) => {
-    this.setState((currentState) => ({
-      books: currentState.books.map((b)=>{
-        if(b.id === id){
-          console.log(`${b.id} y ${id}`)
-          console.log(`${shelf}`)
-          console.log(`${b.shelf}`)
+  //https://knowledge.udacity.com/questions/490197
+  changeShelfBook = (book, shelf) => {
+    console.log(`changeShelf ${book.id} shelf ${shelf}`)
+    let booksUpdated = []
+    this.state.books.map((b)=>{
+        if(b.id === book.id) {
+          //BooksAPI.update(book, shelf)
           b.shelf = shelf
-        }
-      })
-    }))
+        }//Fin if
+      booksUpdated.push(b)
+    })
+    this.setState(() => ({
+      Books: booksUpdated
+    }))//Fin setState
   }
 
   render() {

@@ -2,27 +2,14 @@ import React, { Component } from 'react'
 import BookMenu from './BookMenu'
 
 class Book extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  //Como le doy valor a value, sin asignarle el valor al state desde prop
-
-  handleChange(event) {
-    event.preventDefault()
-    this.setState({value: event.target.value});
-  }
-  
-  
-  changeValue = (shelf) => {
-    this.setState({value: shelf})
+  updateValue = (value, book) => {
+    value=value
+    this.props.onChangeShelf(book, value)
   }
 
   render(){
+    const value = this.props.value
+
     return(
       <ol className="books-grid">
         {this.props.books.map((book) => (
@@ -33,8 +20,8 @@ class Book extends Component {
                 <div className="book-shelf-changer">
                   <BookMenu 
                     id={book.id}
-                    value={this.state.value} 
-                    onChangeValue={this.handleChange}
+                    value={value}
+                    onChange={(event) => this.updateValue(event.target.value, book)}
                   />
                 </div>
               </div>
