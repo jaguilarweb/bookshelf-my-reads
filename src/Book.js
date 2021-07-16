@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import BookMenu from './BookMenu'
 
 class Book extends Component {
-  updateValue = (value, book) => {
-    value=value
-    this.props.onChangeShelf(book, value)
-  }
-
+  // cambiar el value para que desde search tambien tenga
+  //los valores por defecto
   render(){
-    const value = this.props.value
+    let value = this.props.value;
+    const updateValue = (shelf, book) => {
+      value=shelf
+      this.props.onChangeShelf(book, value)
+    }
 
     return(
       <ol className="books-grid">
@@ -20,8 +21,8 @@ class Book extends Component {
                 <div className="book-shelf-changer">
                   <BookMenu 
                     id={book.id}
-                    value={value}
-                    onChange={(event) => this.updateValue(event.target.value, book)}
+                    value={book.shelf}
+                    onChange={(event) => updateValue(event.target.value, book)}
                   />
                 </div>
               </div>

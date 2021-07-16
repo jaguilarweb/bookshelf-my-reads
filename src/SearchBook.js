@@ -21,14 +21,15 @@ class SearchBook extends Component {
 
   render(){
     const { query } = this.state
-    const { books} = this.props
+    const { books } = this.props
 
     const showingBooks = query === ''
       ? books
       : books.filter((book) => (
         book.title.toLowerCase().includes(query.toLowerCase())
       ))
-
+      
+    const value = '';
 
     return(
       <div className="search-books">
@@ -62,6 +63,7 @@ class SearchBook extends Component {
         <div className="search-books-results">
           <Book 
             books={showingBooks}
+            value={value}
             onChangeShelf={this.props.onChangeShelf}
           />
         </div>

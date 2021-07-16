@@ -26,7 +26,7 @@ class BooksApp extends React.Component {
   changeShelfBook = (book, shelf) => {
     console.log(`changeShelf ${book.id} shelf ${shelf}`)
     let booksUpdated = []
-    this.state.books.map((b)=>{
+    this.state.books.forEach((b)=>{
         if(b.id === book.id) {
           //BooksAPI.update(book, shelf)
           b.shelf = shelf
