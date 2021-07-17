@@ -8,15 +8,8 @@ class ListBook extends Component {
   render(){
   // Filter result of shelf
   console.log('list book ' + this.props.books.length)
-/*   const allBooks = this.props.books.map(book => {
-    console.log(book.shelf)
-    return book.shelf
-  })
-  const shelfUnic = allBooks.filter((item, index) => (
-    allBooks.indexOf(item) === index
-  ))
- */
 
+  // Recolect shelf name and create array not duplicated names
   const allBooks = this.props.books.map(book => book.shelf)
   const shelfUnic = [...new Set(allBooks)]
 
@@ -33,21 +26,21 @@ class ListBook extends Component {
           title = 'Read'
           break;
         default:
-          title = 'None'
+          title = false
           break;
       }
     return title
   }
 
   const bookListPerShelf = (shelf) => {
-    const filter = []
+    const booksPerShelf = []
     this.props.books.map((book) => {
       if(shelf === book.shelf){
-        filter.push(book)
+        booksPerShelf.push(book)
       }
-      return filter
+      return booksPerShelf
     })
-    return filter
+    return booksPerShelf
   } 
 // Evitar que se dupliquen los resultados.
     return(
@@ -58,13 +51,15 @@ class ListBook extends Component {
               return(
                   <div key={shelf} className="bookshelf">
                     <BookshelftTitle  title={asignTitle(shelf)} />
-                    <div className="bookshelf-books">
-                        <Book 
-                          books={bookListPerShelf(shelf)}
-                          value={shelf}
-                          onChangeShelf={this.props.onChangeShelf}
-                        />
-                    </div>
+                      {shelf !== 'none' && (
+                        <div className="bookshelf-books">
+                            <Book 
+                              books={bookListPerShelf(shelf)}
+                              value={shelf}
+                              onChangeShelf={this.props.onChangeShelf}
+                            />
+                        </div>
+                      )}
                   </div>
               )//fin return
               }
@@ -79,7 +74,7 @@ class ListBook extends Component {
         </Link>
         </main>
     )//Fin return main
-  }//Render
-}// Class
+  }//Fin Render
+}// Fin Class
 
 export default ListBook
