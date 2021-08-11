@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import BookMenu from './BookMenu'
 
 class Book extends Component {
   render(){
-    let value = this.props.value;
-    const updateValue = (shelf, book) => {
-      value=shelf
-      this.props.onChangeShelf(book, value)
+
+    const updateValue = (book, shelf) => {
+      this.props.onChangeShelf(book, shelf)
     }
 
     return(
@@ -21,7 +21,7 @@ class Book extends Component {
                   <BookMenu 
                     id={book.id}
                     value={book.shelf}
-                    onChange={(event) => updateValue(event.target.value, book)}
+                    onChange={(event) => updateValue(book, event.target.value)}
                   />
                 </div>
               </div>
@@ -36,5 +36,11 @@ class Book extends Component {
     )
   }
 }
+
+Book.propTypes = {
+  books: PropTypes.array.isRequired,
+  onChangeShelf: PropTypes.func.isRequired
+}
+
 
 export default Book

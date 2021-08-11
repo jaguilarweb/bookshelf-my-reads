@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Book from './Book'
+import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 
 //TODO: search function
@@ -7,16 +9,36 @@ import { Link } from 'react-router-dom'
 
 class SearchBook extends Component {
   state = {
-    query:''
+    query:'',
+    searchBooks: []
   }
 
   updateQuery = (query) => {
     this.setState(() => ({
-      query:query.trim()
+      query: query
     }))
+    this.searching(query);
   }
+
   clearQuery = () => {
     this.updateQuery('');
+  }
+
+  //Seguir con busqueda para que no me de error
+  searching = (query) => {
+    BooksAPI.search(query)
+    .then((books) => {
+      if(books.length !== undefined){
+        books.map((book) => (
+          book.shelf = 'none'
+        ))
+        this.setState(() => ({
+          searchBooks: books
+        }))
+      }else{
+        console.log(books.length)
+      }
+    })
   }
 
   render(){
@@ -24,12 +46,10 @@ class SearchBook extends Component {
     const { books } = this.props
 
     const showingBooks = query === ''
-      ? books
-      : books.filter((book) => (
+      ? this.state.searchBooks
+      : this.state.searchBooks.filter((book) => (
         book.title.toLowerCase().includes(query.toLowerCase())
       ))
-      
-    const value = '';
 
     return(
       <div className="search-books">
@@ -54,7 +74,7 @@ class SearchBook extends Component {
             />
           </div>
         </div>
-          {showingBooks.length !== books.length && (
+          {showingBooks.length !== 0 && (
             <div className='showing-books'>
               <span>Now showing {showingBooks.length} of {books.length}</span>
               <button onClick={this.clearQuery}>Show all </button>
@@ -63,13 +83,17 @@ class SearchBook extends Component {
         <div className="search-books-results">
           <Book 
             books={showingBooks}
-            value={value}
             onChangeShelf={this.props.onChangeShelf}
           />
         </div>
     </div>
     )
   }
+}
+
+SearchBook.propTypes = {
+  books: PropTypes.array.isRequired,
+  onChangeShelf: PropTypes.func.isRequired
 }
 
 export default SearchBook

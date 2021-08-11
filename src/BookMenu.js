@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 //From here I can not keep the changes to see them on search page
 class BookMenu extends Component{
@@ -14,5 +15,12 @@ class BookMenu extends Component{
     )
   }
 }
+
+BookMenu.propTypes = {
+  id: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
+}
+
 
 export default BookMenu
