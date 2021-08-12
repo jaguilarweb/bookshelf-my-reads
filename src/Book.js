@@ -3,8 +3,12 @@ import PropTypes from 'prop-types'
 import BookMenu from './BookMenu'
 
 class Book extends Component {
-  render(){
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
+  }
 
+  render(){
     const updateValue = (book, shelf) => {
       this.props.onChangeShelf(book, shelf)
     }
@@ -37,10 +41,7 @@ class Book extends Component {
   }
 }
 
-Book.propTypes = {
-  books: PropTypes.array.isRequired,
-  onChangeShelf: PropTypes.func.isRequired
-}
+
 
 
 export default Book

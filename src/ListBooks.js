@@ -5,6 +5,11 @@ import Book from './Book'
 import { Link } from 'react-router-dom'
 
 class ListBook extends Component {
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
+  }
+
 
   render(){
   // Filter result of shelf
@@ -78,9 +83,5 @@ class ListBook extends Component {
   }//Fin Render
 }// Fin Class
 
-ListBook.propTypes = {
-  books: PropTypes.array.isRequired,
-  onChangeShelf: PropTypes.func.isRequired
-}
 
 export default ListBook

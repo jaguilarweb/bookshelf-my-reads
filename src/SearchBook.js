@@ -8,6 +8,11 @@ import { Link } from 'react-router-dom'
 //TODO: route back function
 
 class SearchBook extends Component {
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
+  }
+
   state = {
     query:'',
     searchBooks: []
@@ -25,30 +30,32 @@ class SearchBook extends Component {
   }
 
   //Seguir con busqueda para que no me de error
+  // Reepensar como ejecutar el searching
+
   searching = (query) => {
     BooksAPI.search(query)
     .then((books) => {
-      if(books.length !== undefined){
+      if(books.length > 0){
+        console.log(books.length)
         books.map((book) => (
           book.shelf = 'none'
         ))
         this.setState(() => ({
           searchBooks: books
         }))
-      }else{
-        console.log(books.length)
       }
     })
   }
 
   render(){
-    const { query } = this.state
+    const { query, searchBooks } = this.state
     const { books } = this.props
 
     const showingBooks = query === ''
-      ? this.state.searchBooks
-      : this.state.searchBooks.filter((book) => (
-        book.title.toLowerCase().includes(query.toLowerCase())
+      ? searchBooks
+      : searchBooks.filter((book) => (
+        book.title.toLowerCase().includes(query.toLowerCase()) 
+        /* book.authors.toLowerCase().filter((author => author.toLowerCase().includes(query.toLowerCase()))) */
       ))
 
     return(
@@ -76,7 +83,7 @@ class SearchBook extends Component {
         </div>
           {showingBooks.length !== 0 && (
             <div className='showing-books'>
-              <span>Now showing {showingBooks.length} of {books.length}</span>
+              <span>Now showing {showingBooks.length} of {showingBooks.length}</span>
               <button onClick={this.clearQuery}>Show all </button>
             </div>
           )}
@@ -91,9 +98,6 @@ class SearchBook extends Component {
   }
 }
 
-SearchBook.propTypes = {
-  books: PropTypes.array.isRequired,
-  onChangeShelf: PropTypes.func.isRequired
-}
+
 
 export default SearchBook
