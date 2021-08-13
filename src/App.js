@@ -24,23 +24,27 @@ class BooksApp extends React.Component {
 
   //https://knowledge.udacity.com/questions/490197
   // I did not use the Response of Api update function
+  // Function change the book shelf
   changeShelfBook = (book, shelf) => {
     let booksUpdated = []
-    this.state.books.forEach((b)=>{
-        if(b.id === book.id) {
-          BooksAPI.update(b, shelf)
-          b.shelf = shelf
-        }
+    this.state.books.map((b) => {
+      if(b.id === book.id) {
+        b.shelf = shelf
+      }
       booksUpdated.push(b)
+      return booksUpdated
     })
+
     this.setState(() => ({
       books: booksUpdated
     }))
+    
   }
 
   render() {
     return (
       <div className="app">
+        {console.log("Estado " + this.state.books.length)}
         <Header />
         <Route exact path='/' render={()=> (
           <ListBook 

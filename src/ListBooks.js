@@ -16,10 +16,11 @@ class ListBook extends Component {
   console.log('list book ' + this.props.books.length)
 
   // Recolect shelf name and create array not duplicated names
-  const allBooks = this.props.books.map(book => book.shelf)
-  const shelfUnic = [...new Set(allBooks)]
+  const arrayShelvesName = this.props.books.map(book => book.shelf)
+  const shelfUnic = [...new Set(arrayShelvesName)]
 
-  const asignTitle=(shelf)=> {
+  // Asign title to the shelf
+  const asignTitle = (shelf) => {
     let title= '';
       switch (shelf) {
         case 'currentlyReading':
@@ -32,32 +33,29 @@ class ListBook extends Component {
           title = 'Read'
           break;
         default:
-          title = false
+          title = 'None'
           break;
       }
     return title
   }
-
+// Books are listed by shelf
   const bookListPerShelf = (shelf) => {
-    const booksPerShelf = []
-    this.props.books.map((book) => {
-      if(shelf === book.shelf){
-        booksPerShelf.push(book)
-      }
-      return booksPerShelf
-    })
+    let booksPerShelf = this.props.books.filter((book) => {
+      return book.shelf === shelf
+  })
     return booksPerShelf
   } 
-// Evitar que se dupliquen los resultados.
+
     return(
       <main className="list-books">
         <div className="list-books-content">
           <div>
-            {shelfUnic.map((shelf) => {
-              return(
+            {shelfUnic.map((shelf) => shelf !== 'none' &&
+            (
+                /* if(shelf !== 'Read'){ */
                   <div key={shelf} className="bookshelf">
+                    {console.log(shelf)}
                     <BookshelftTitle  title={asignTitle(shelf)} />
-                      {shelf !== 'none' && (
                         <div className="bookshelf-books">
                             <Book 
                               books={bookListPerShelf(shelf)}
@@ -65,11 +63,10 @@ class ListBook extends Component {
                               onChangeShelf={this.props.onChangeShelf}
                             />
                         </div>
-                      )}
                   </div>
-              )//fin return
-              }
-            )// fin map
+                /* }//fin del if */
+            )
+            )//
           }
           </div>
         </div>
