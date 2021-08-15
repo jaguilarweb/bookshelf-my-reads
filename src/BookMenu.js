@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-//From here I can not keep the changes to see them on search page
 class BookMenu extends Component{
+  handleChange = (event) => {
+    event.preventDefault()
+    this.props.onChange(this.props.book, event.target.value)
+  }
+
+
   render(){
     return(
-        <select value={this.props.value} onChange={this.props.onChange}>
+        <select value={this.props.value} onChange={this.handleChange}>
             <option value="move" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
@@ -17,7 +22,7 @@ class BookMenu extends Component{
 }
 
 BookMenu.propTypes = {
-  id: PropTypes.string.isRequired,
+  book: PropTypes.object.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 }

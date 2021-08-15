@@ -4,12 +4,11 @@ import Book from './Book'
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 
-//TODO: search function
-//TODO: route back function
 
 class SearchBook extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
+    isBookInState: PropTypes.func.isRequired,
     onChangeShelf: PropTypes.func.isRequired
   }
 
@@ -29,30 +28,32 @@ class SearchBook extends Component {
     this.updateQuery('');
   }
 
-  //Seguir con busqueda para que no me de error
-  // Reepensar como ejecutar el searching
-
   searching = (query) => {
+    const { isBookInState } = this.props
     BooksAPI.search(query)
     .then((books) => {
-      if(books.length > 0){
-        console.log(books.length)
-        books.map((book) => (
+      let booksUpdated = []
+      books.map((book) => {
+        if(isBookInState(book) !== undefined){
+          const bookInList = isBookInState(book)
+          book.shelf = bookInList.shelf
+        }else{
           book.shelf = 'none'
-        ))
-        this.setState(() => ({
-          searchBooks: books
-        }))
-      }
+        }
+        booksUpdated.push(book)
+        return booksUpdated
+      })
+      this.setState(() => ({
+        searchBooks: booksUpdated
+      }))
     })
+    .catch(error => alert("Hubo un error " + error))
   }
 
   render(){
     const { query, searchBooks } = this.state
-    const { books } = this.props
-
     const showingBooks = query === ''
-      ? searchBooks
+      ? []
       : searchBooks.filter((book) => (
         book.title.toLowerCase().includes(query.toLowerCase()) 
         /* book.authors.toLowerCase().filter((author => author.toLowerCase().includes(query.toLowerCase()))) */
@@ -60,6 +61,7 @@ class SearchBook extends Component {
 
     return(
       <div className="search-books">
+        {console.log('Search book '+ this.state.searchBooks.length)}
         <div className="search-books-bar">
           <Link to='/'>
             <button className="close-search" >Close</button>
@@ -83,13 +85,14 @@ class SearchBook extends Component {
         </div>
           {showingBooks.length !== 0 && (
             <div className='showing-books'>
-              <span>Now showing {showingBooks.length} of {showingBooks.length}</span>
-              <button onClick={this.clearQuery}>Show all </button>
+              <span>Now showing {showingBooks.length} of {searchBooks.length}</span>
+              <button onClick={this.clearQuery}>Clean request </button>
             </div>
           )}
         <div className="search-books-results">
           <Book 
-            books={showingBooks}
+            books={this.props.books}
+            displayBooks={showingBooks}
             onChangeShelf={this.props.onChangeShelf}
           />
         </div>
@@ -97,7 +100,5 @@ class SearchBook extends Component {
     )
   }
 }
-
-
 
 export default SearchBook

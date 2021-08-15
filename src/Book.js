@@ -4,28 +4,25 @@ import BookMenu from './BookMenu'
 
 class Book extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired,
+    displayBooks: PropTypes.array.isRequired,
     onChangeShelf: PropTypes.func.isRequired
   }
 
   render(){
-    const updateValue = (book, shelf) => {
-      this.props.onChangeShelf(book, shelf)
-    }
+    const { displayBooks} = this.props
 
     return(
       <ol className="books-grid">
-        {this.props.books.map((book) => (
+        {displayBooks.map((book) => (
           <li key = {book.id}>
             <div className="book">
               <div className="book-top">
                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                 <div className="book-shelf-changer">
-                  { book.shelf === false && ( book.shelf = 'none')}
-                  <BookMenu 
-                    id={book.id}
+                  <BookMenu
+                    book={book}
                     value={book.shelf}
-                    onChange={(event) => updateValue(book, event.target.value)}
+                    onChange={this.props.onChangeShelf}
                   />
                 </div>
               </div>

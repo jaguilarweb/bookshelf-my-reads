@@ -10,7 +10,6 @@ class ListBook extends Component {
     onChangeShelf: PropTypes.func.isRequired
   }
 
-
   render(){
   // Filter result of shelf
   console.log('list book ' + this.props.books.length)
@@ -33,7 +32,6 @@ class ListBook extends Component {
           title = 'Read'
           break;
         default:
-          title = 'None'
           break;
       }
     return title
@@ -52,21 +50,19 @@ class ListBook extends Component {
           <div>
             {shelfUnic.map((shelf) => shelf !== 'none' &&
             (
-                /* if(shelf !== 'Read'){ */
-                  <div key={shelf} className="bookshelf">
-                    {console.log(shelf)}
-                    <BookshelftTitle  title={asignTitle(shelf)} />
-                        <div className="bookshelf-books">
-                            <Book 
-                              books={bookListPerShelf(shelf)}
-                              value={shelf}
-                              onChangeShelf={this.props.onChangeShelf}
-                            />
-                        </div>
-                  </div>
-                /* }//fin del if */
+              <div key={shelf} className="bookshelf">
+                {console.log(shelf)}
+                <BookshelftTitle  title={asignTitle(shelf)} />
+                    <div className="bookshelf-books">
+                        <Book
+                          books={this.props.books}
+                          displayBooks={bookListPerShelf(shelf)}
+                          onChangeShelf={this.props.onChangeShelf}
+                        />
+                    </div>
+              </div>
             )
-            )//
+            )//End Map
           }
           </div>
         </div>
@@ -76,9 +72,9 @@ class ListBook extends Component {
           </div>
         </Link>
         </main>
-    )//Fin return main
-  }//Fin Render
-}// Fin Class
+    )//End return main
+  }//End Render
+}// End Class
 
 
 export default ListBook
