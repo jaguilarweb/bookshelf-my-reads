@@ -55,8 +55,8 @@ class SearchBook extends Component {
     const showingBooks = query === ''
       ? []
       : searchBooks.filter((book) => (
-        book.title.toLowerCase().includes(query.toLowerCase()) 
-        /* book.authors.toLowerCase().filter((author => author.toLowerCase().includes(query.toLowerCase()))) */
+        book.title.toLowerCase().includes(query.toLowerCase()) ||
+        book.authors.filter((author => author.toLowerCase().includes(query.toLowerCase())))
       ))
 
     return(
