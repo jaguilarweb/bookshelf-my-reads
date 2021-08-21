@@ -50,3 +50,7 @@ export const search = (query) =>
     body: JSON.stringify({ query })
   }).then(res => res.json())
     .then(data => data.books)
+  //Test Error
+/* {
+  throw new Error('Not Found')
+} */

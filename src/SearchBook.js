@@ -21,33 +21,41 @@ class SearchBook extends Component {
     this.setState(() => ({
       query: query
     }))
-    this.searching(query);
+    if(query !== ''){
+      this.searching(query);
+    }
   }
 
   clearQuery = () => {
     this.updateQuery('');
   }
 
-  searching = (query) => {
-    const { isBookInState } = this.props
-    BooksAPI.search(query)
-    .then((books) => {
+  searching = async (query) => {
+    const { isBookInState, changeError } = this.props
+    try {
+      const books = await BooksAPI.search(query)
       let booksUpdated = []
-      books.map((book) => {
-        if(isBookInState(book) !== undefined){
-          const bookInList = isBookInState(book)
-          book.shelf = bookInList.shelf
-        }else{
-          book.shelf = 'none'
-        }
-        booksUpdated.push(book)
-        return booksUpdated
-      })
+      console.log(`Error ${books}`)
+      if(books.error === undefined){
+        console.log(`Query ${query}`)
+        books.map((book) => {
+          if(isBookInState(book) !== undefined){
+            //Si el libro está en el listado se recupera el shelf
+            const bookInList = isBookInState(book)
+            book.shelf = bookInList.shelf
+          }else{
+            book.shelf = 'none'
+          }
+          booksUpdated.push(book)
+          return booksUpdated
+        })
+      }
       this.setState(() => ({
         searchBooks: booksUpdated
       }))
-    })
-    .catch(error => alert("Hubo un error " + error))
+    } catch(error){
+      changeError(error)
+    }
   }
 
   render(){
@@ -55,13 +63,16 @@ class SearchBook extends Component {
     const showingBooks = query === ''
       ? []
       : searchBooks.filter((book) => (
-        book.title.toLowerCase().includes(query.toLowerCase()) ||
-        book.authors.filter((author => author.toLowerCase().includes(query.toLowerCase())))
+            book.title.toLowerCase().includes(query.toLowerCase())
+           // book.authors.filter( author => author.toLowerCase().includes(query.toLowerCase()))
       ))
+
+      if(this.props.error){
+        return <div className='error'>Error: {this.state.error.message}</div>
+      }
 
     return(
       <div className="search-books">
-        {console.log('Search book '+ this.state.searchBooks.length)}
         <div className="search-books-bar">
           <Link to='/'>
             <button className="close-search" >Close</button>
@@ -90,11 +101,19 @@ class SearchBook extends Component {
             </div>
           )}
         <div className="search-books-results">
+        {console.log('showingBooks ' + showingBooks)}
+        {console.log('showinglength ' + showingBooks.length)}
+          {showingBooks.length !== 0 && 
+
+          ( 
+            
           <Book 
             books={this.props.books}
             displayBooks={showingBooks}
             onChangeShelf={this.props.onChangeShelf}
-          />
+          /> )
+          }
+
         </div>
     </div>
     )
@@ -102,3 +121,11 @@ class SearchBook extends Component {
 }
 
 export default SearchBook
+
+
+/* {showingBooks.length !== 0 && ( 
+  <Book 
+    books={this.props.books}
+    displayBooks={showingBooks}
+    onChangeShelf={this.props.onChangeShelf}
+  /> )} */

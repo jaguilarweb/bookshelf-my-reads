@@ -31,6 +31,10 @@ class BooksApp extends React.Component {
     }
   }
 
+  changeError = (error) => {
+    this.setState({error: error})
+  }
+
     /* Check if new book are in the current books list
     Output:
     - undefined: if the new book is not in the list
@@ -76,7 +80,7 @@ class BooksApp extends React.Component {
       return <div className='loading'>Loading...</div>
     }
     if(this.state.error){
-      return `Error: ${this.state.error.message}`
+      return <div className='error'>Error: {this.state.error.message}</div>
     }
     return (
       <div className="app">
@@ -91,8 +95,10 @@ class BooksApp extends React.Component {
         <Route path='/searchPage' render={() => (
           <SearchBook 
             books={this.state.books}
+            error={this.state.error}
             onChangeShelf={this.changeShelfBook}
             isBookInState = {this.isBookInState}
+            changeError={this.changeError}
             />
           )}
         />
