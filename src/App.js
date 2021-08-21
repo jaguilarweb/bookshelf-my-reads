@@ -9,17 +9,26 @@ import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    loading: true,
+    error: null,
+    books: undefined
   }
 
   //Call api to fill state
   componentDidMount(){
-    BooksAPI.getAll()
-    .then((books) => {
-      this.setState(() => ({
-        books
-      }))
-    })
+    this.fetchData()
+  }
+
+  fetchData = async () => {
+    //Si volvemos a llamar a fetch data, y esta se habìa vuelto false al cargar
+    //debemos reinciar el valor
+    this.setState({ loading: true, error: null })
+    try {
+      const books = await BooksAPI.getAll()
+      this.setState({ loading: false, books: books })
+    } catch (error){
+      this.setState({ loading: false, error: error })
+    }
   }
 
     /* Check if new book are in the current books list
@@ -63,6 +72,12 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    if(this.state.loading === true){
+      return <div className='loading'>Loading...</div>
+    }
+    if(this.state.error){
+      return `Error: ${this.state.error.message}`
+    }
     return (
       <div className="app">
         <Header />

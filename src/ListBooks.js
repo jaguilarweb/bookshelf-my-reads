@@ -9,11 +9,18 @@ class ListBook extends Component {
     books: PropTypes.array.isRequired,
     onChangeShelf: PropTypes.func.isRequired
   }
-
+//Seguir con el manejo de errores (recordar que dejè la api enviando un error)
   render(){
+    console.log("ListBooks "+ this.props.books.length)
+    if(this.props.books.length === 0){
+      return(
+        <div>
+          <h3>There are not books</h3>
+          <p>Try to refresh the Page</p>
+        </div>
+      )
+    }
   // Filter result of shelf
-  console.log('list book ' + this.props.books.length)
-
   // Recolect shelf name and create array not duplicated names
   const arrayShelvesName = this.props.books.map(book => book.shelf)
   const shelfUnic = [...new Set(arrayShelvesName)]

@@ -10,31 +10,32 @@ class Book extends Component {
 
   render(){
     const { displayBooks} = this.props
-
-    return(
-      <ol className="books-grid">
-        {displayBooks.map((book) => (
-          <li key = {book.id}>
-            <div className="book">
-              <div className="book-top">
-                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-                <div className="book-shelf-changer">
-                  <BookMenu
-                    book={book}
-                    value={book.shelf}
-                    onChange={this.props.onChangeShelf}
-                  />
+    if(displayBooks.lenght !== 0){
+      return(
+        <ol className="books-grid">
+          {displayBooks.map((book) => (
+            <li key = {book.id}>
+              <div className="book">
+                <div className="book-top">
+                  <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+                  <div className="book-shelf-changer">
+                    <BookMenu
+                      book={book}
+                      value={book.shelf}
+                      onChange={this.props.onChangeShelf}
+                    />
+                  </div>
                 </div>
+                <div className="book-title">{book.title}</div>
+                {book.authors.map((author) => (
+                  <div key={author} className="book-authors">{author}</div>
+                ))}
               </div>
-              <div className="book-title">{book.title}</div>
-              {book.authors.map((author) => (
-                <div key={author} className="book-authors">{author}</div>
-              ))}
-            </div>
-          </li>
-          ))}
-      </ol>
-    )
+            </li>
+            ))}
+        </ol>
+      )
+    }
   }
 }
 

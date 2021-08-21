@@ -17,10 +17,18 @@ export const get = (bookId) =>
     .then(res => res.json())
     .then(data => data.book)
 
-export const getAll = () =>
+export const getAll = () => 
   fetch(`${api}/books`, { headers })
     .then(res => res.json())
     .then(data => data.books)
+
+//Test Data Empty
+    /* .then(data => []) */
+//Test Error
+/* {
+  throw new Error('Not Found')
+} */
+    
 
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
