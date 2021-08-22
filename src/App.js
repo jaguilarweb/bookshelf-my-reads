@@ -20,8 +20,6 @@ class BooksApp extends React.Component {
   }
 
   fetchData = async () => {
-    //Si volvemos a llamar a fetch data, y esta se habìa vuelto false al cargar
-    //debemos reinciar el valor
     this.setState({ loading: true, error: null })
     try {
       const books = await BooksAPI.getAll()
@@ -46,15 +44,14 @@ class BooksApp extends React.Component {
 
   //https://knowledge.udacity.com/questions/490197
   // I did not use the Response of Api update function
-
     //Add new book in the list to be displayed
-    addBookToList = (book) => {
-      let newBooksAdded = this.state.books
-        newBooksAdded.push(book)
-        this.setState(() => ({
-        books: newBooksAdded
-      }))
-    }
+  addBookToList = (book) => {
+    let newBooksAdded = this.state.books
+      newBooksAdded.push(book)
+      this.setState(() => ({
+      books: newBooksAdded
+    }))
+  }
 
   // Function change the book shelf
   changeShelfBook = (book, shelf) => {
@@ -85,14 +82,14 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Header />
-        <Route exact path='/' render={()=> (
+        <Route exact path='/' render={() => (
           <ListBook 
             books={this.state.books}
             onChangeShelf={this.changeShelfBook}
           />
           )}
         />
-        <Route path='/searchPage' render={() => (
+        <Route path='/search' render={() => (
           <SearchBook 
             books={this.state.books}
             error={this.state.error}

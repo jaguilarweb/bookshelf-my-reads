@@ -4,7 +4,6 @@ import Book from './Book'
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 
-
 class SearchBook extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
@@ -35,12 +34,9 @@ class SearchBook extends Component {
     try {
       const books = await BooksAPI.search(query)
       let booksUpdated = []
-      console.log(`Error ${books}`)
       if(books.error === undefined){
-        console.log(`Query ${query}`)
         books.map((book) => {
           if(isBookInState(book) !== undefined){
-            //Si el libro está en el listado se recupera el shelf
             const bookInList = isBookInState(book)
             book.shelf = bookInList.shelf
           }else{
@@ -64,12 +60,11 @@ class SearchBook extends Component {
       ? []
       : searchBooks.filter((book) => (
             book.title.toLowerCase().includes(query.toLowerCase())
-           // book.authors.filter( author => author.toLowerCase().includes(query.toLowerCase()))
       ))
 
-      if(this.props.error){
-        return <div className='error'>Error: {this.state.error.message}</div>
-      }
+    if(this.props.error){
+      return <div className='error'>Error: {this.state.error.message}</div>
+    }
 
     return(
       <div className="search-books">
@@ -101,19 +96,13 @@ class SearchBook extends Component {
             </div>
           )}
         <div className="search-books-results">
-        {console.log('showingBooks ' + showingBooks)}
-        {console.log('showinglength ' + showingBooks.length)}
-          {showingBooks.length !== 0 && 
-
-          ( 
-            
-          <Book 
-            books={this.props.books}
-            displayBooks={showingBooks}
-            onChangeShelf={this.props.onChangeShelf}
-          /> )
-          }
-
+          {showingBooks.length !== 0 && (
+            <Book 
+              books={this.props.books}
+              displayBooks={showingBooks}
+              onChangeShelf={this.props.onChangeShelf}
+            />
+          )}
         </div>
     </div>
     )
@@ -121,11 +110,3 @@ class SearchBook extends Component {
 }
 
 export default SearchBook
-
-
-/* {showingBooks.length !== 0 && ( 
-  <Book 
-    books={this.props.books}
-    displayBooks={showingBooks}
-    onChangeShelf={this.props.onChangeShelf}
-  /> )} */

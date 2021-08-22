@@ -9,20 +9,12 @@ class Book extends Component {
   }
 
   render(){
-    const { displayBooks} = this.props
-    if (displayBooks === undefined){
-      console.log("displayBooks Book " + displayBooks)
-      return (<div>No hay</div>)
-    }
+    const { displayBooks } = this.props
     if(displayBooks !== undefined){
-      console.log("displayBooks Book " + displayBooks)
-      console.log("displaylengt Book " + displayBooks.length)
       return(
         <ol className="books-grid">
           {displayBooks.map((book) => (
-            
             <li key = {book.id}>
-              {console.log(book.id)}
               <div className="book">
                 <div className="book-top">
                 {book.imageLinks.smallThumbnail && (
@@ -43,14 +35,11 @@ class Book extends Component {
                 )))}
               </div>
             </li>
-            ))}
+          ))}
         </ol>
       )
     }
   }
 }
-
-
-
 
 export default Book

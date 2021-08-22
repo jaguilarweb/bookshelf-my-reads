@@ -6,7 +6,6 @@ This is the final assessment project for Udacity's React Fundamentals course.
 
 I am developing a bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read. 
 
-## In progress... :construction:
 
 ## UI of the project
 
@@ -15,7 +14,9 @@ I am developing a bookshelf app that allows you to select and categorize books y
 ## Getting started
 This project needs to have installed NodeJS.
 
-That once you clone, cd into your new folder and run:
+That once you clone, cd into your new folder. 
+
+To install all dependencies run the following code:
 
 `npm install`
 

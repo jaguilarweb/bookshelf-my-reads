@@ -7,7 +7,6 @@ class BookMenu extends Component{
     this.props.onChange(this.props.book, event.target.value)
   }
 
-
   render(){
     return(
         <select value={this.props.value} onChange={this.handleChange}>
@@ -26,6 +25,5 @@ BookMenu.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 }
-
 
 export default BookMenu
